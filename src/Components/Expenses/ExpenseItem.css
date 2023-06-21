@@ -43,9 +43,9 @@
         flex: 1;
     }
     }
-/* .expense-item_description h2{
+.expense-item_description h2{
     font-size: 1.25rem;
-} */
+}
 .expense-item_price{
     font-size: 1.25 rem;
     padding: 0.5rem 1.5rem;
