@@ -1,0 +1,38 @@
+.expense-details{
+display: flex;
+flex-direction: column;
+width: 8rem;
+height: 8rem;
+border: 1px solid wheat;
+background-color: rgb(0, 0, 0);
+color: white;
+border-radius: 12px;
+align-items: center;
+justify-content: center;
+
+}
+.expense-details_title{
+    font-size: 15px;
+    font-weight: bold;
+    color: #fdfdfd;
+
+}
+.expense-details_amount{
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 8px;
+    color: #fdfdfd;
+    background-color: rgba(136, 33, 136, 0.596);
+    border-radius: 10px;
+    padding: 0.3rem;
+    border: 1cm;
+    border: 2px solid white;
+    
+  
+}
+.expense-details_location{
+    font-size: 20px;
+    color: #fdfdfd;
+    font-weight: bold;
+
+}
