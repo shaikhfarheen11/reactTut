@@ -1,29 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ExpenseDate from './ExpenseDate';
 import Card from '../UI/Card';
 import './ExpenseItem.css';
 import ExpenseDetails from './ExpenseDetails';
 
+const ExpenseItem = (props) => {
+  const [amount, setAmount] = useState(props.amount);
 
-    const ExpenseItem = (props) => {
-      const deleteExpenseHandler = () => {
-        const expenseItem = document.querySelector('.expense-item');
-        expenseItem.remove();
-      }
-        return (
-          <Card className='expense-item'>
+  const changeAmountHandler = () => {
+    setAmount(100);
+  };
 
-            <ExpenseDate date={props.date} />
-            <div className='expense-item_description'>
-              
-            </div>
-              <ExpenseDetails amount={props.amount} location={props.location} title={props.title} />
-              <button className="expense-item_delete" onClick={deleteExpenseHandler}>
-          Delete Expense
+  return (
+    <Card className='expense-item'>
+      <ExpenseDate date={props.date} />
+      <div className='expense-item_description'>
+        </div>
+        <ExpenseDetails amount={amount} location={props.location} title={props.title} />
+        <button className="expense-item_button" onClick={changeAmountHandler}>
+          Change Amount
         </button>
-       
-          </Card>
-        );
-      }
-      
-      export default ExpenseItem;
+        
+    </Card>
+  );
+}
+
+export default ExpenseItem;
