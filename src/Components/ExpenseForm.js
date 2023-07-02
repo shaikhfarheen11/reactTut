@@ -22,9 +22,10 @@ const ExpenseForm = () => {
           <input type="date" id="expenseDate" onChange={handleInputChange} />
         </div>
       </form>
-      <button className="submit-button">Submit</button>
+      <button className="submit-button">App Expense</button>
     </div>
   );
 };
 
 export default ExpenseForm;
+
