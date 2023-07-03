@@ -15,16 +15,18 @@
   
   label {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 17px;
 
   }
   
   input {
     padding: 15px;
-    padding-left: 200px;
+    /* padding-left: 150px; */
     border-radius: 5px;
     border: 1px solid rgb(34, 34, 34);
     text-align: start;
+    width: 350px;
+    
     
     
   }
