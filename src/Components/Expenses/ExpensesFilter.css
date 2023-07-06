@@ -1,0 +1,23 @@
+.expenses-filter {
+    margin-bottom: 1rem;
+  }
+  
+  .expense-filter_control {
+    display: flex;
+    align-items: center;
+  }
+  
+  .filter_year {
+    font-weight: bold;
+    margin-right: 0.5rem;
+    color: white;
+    font-size: large;
+  }
+  
+  select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  

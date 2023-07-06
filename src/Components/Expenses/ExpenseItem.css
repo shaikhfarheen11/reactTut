@@ -46,8 +46,16 @@
     font-size: 1.25rem;
 }
 .expense-item_price{
-    font-size: 2.30 rem;
-    padding: 0.5rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 9px;
+    color: #fdfdfd;
+    background-color: rgba(70, 8, 70, 0.596);
+    border-radius: 10px;
+    padding: 0.7rem;
+    border: 2cm;
+    border: 2px solid white;;
+    
 }
 .expense-item_location{
     color: white;

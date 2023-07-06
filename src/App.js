@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.css';
 import ExpenseForm from './Components/ExpenseForm';
 import Expenses from './Components/Expenses/Expenses';
 
@@ -42,9 +43,11 @@ const App = () => {
 
   return (
     <div>
+      <div className='app'>
       <h2>Let's get started</h2>
       <ExpenseForm onAddExpense={addExpenseHandler} />
       <Expenses items={expenses} />
+    </div>
     </div>
   );
 };
