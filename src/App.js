@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import ExpenseForm from './Components/ExpenseForm';
 import Expenses from './Components/Expenses/Expenses';
 
 const App = () => {
-  const [expenses, setExpenses] = useState([
+  const expenses = [
     {
       id: 'el',
       title: 'Toilet Paper',
@@ -33,13 +33,12 @@ const App = () => {
       date: new Date(2021, 2, 12),
       location: 'Goa',
     },
-  ]);
+  ];
 
-  const addExpenseHandler = (expenseData) => {
-    setExpenses((prevExpenses) => {
-      return [...prevExpenses, expenseData];
-    });
-  };
+  const addExpenseHandler = expense => {
+    console.log('In App.js');
+    console.log(expense);
+    };
 
   return (
     <div>

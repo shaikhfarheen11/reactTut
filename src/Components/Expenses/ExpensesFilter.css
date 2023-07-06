@@ -12,12 +12,18 @@
     margin-right: 0.5rem;
     color: white;
     font-size: large;
+    
+    
   }
   
   select {
-    padding: 0.5rem;
+    padding: 0.7rem;
     font-size: 1rem;
     border-radius: 5px;
     border: 1px solid #ccc;
+    width: 120px;
+    text-align: center;
+    margin-left: 35rem;
+    font-weight: bold;
   }
   
