@@ -13,6 +13,8 @@ const ExpenseItem = (props) => {
         <h2>{props.title}</h2>
         <div className="expense-item_price">${props.amount}</div>
       </div>
+
+
     </Card>
   );
 };

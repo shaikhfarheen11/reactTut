@@ -46,11 +46,11 @@
   
   .submit-button {
     margin-top: 1rem;
-    padding: 1rem 2rem;
-    background-color: #57043d;
+    padding: 1.1rem 2.2rem;
+    background-color: #2d093b;
     color: #fff;
     border: none;
-    border-radius: 1rem;
+    border-radius: 0.7rem;
     cursor: pointer;
     font-weight: bold;
     
@@ -60,3 +60,21 @@
     background-color: rgb(15, 78, 94)
     
   }
+  .cancel-button {
+    margin-top: 1rem;
+    margin-right: 0.6rem;
+    padding: 1rem 2rem;
+    background-color: #2d093b;
+    color: #fff;
+    border: none;
+    border-radius: 0.7rem;
+    cursor: pointer;
+    font-weight: bold;
+    
+  }
+  
+  .cancel-button:hover {
+    background-color: rgb(15, 78, 94)
+    
+  }
+

@@ -5,6 +5,7 @@ const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState('');
   const [enteredAmount, setEnteredAmount] = useState('');
   const [enteredDate, setEnteredDate] = useState('');
+  const [showForm, setShowForm] = useState(true);
 
   const handleTitleChange = (event) => {
     setEnteredTitle(event.target.value);
@@ -20,21 +21,36 @@ const ExpenseForm = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevents form submission and page reload
-    // Do something with the entered data, such as sending it to a server
-    console.log(enteredTitle, enteredAmount, enteredDate);
-    // Reset the form after submission
-    setEnteredTitle('');
-    setEnteredAmount('');
-    setEnteredDate('');
-    
+
     const expenseData = {
       title: enteredTitle,
       amount: enteredAmount,
-      date: new Date(enteredDate)
+      date: new Date(enteredDate),
     };
+
     props.onAddExpense(expenseData);
     console.log(expenseData);
+
+    setEnteredTitle('');
+    setEnteredAmount('');
+    setEnteredDate('');
+    setShowForm(false);
   };
+
+  const handleCancel = () => {
+    setShowForm(false);
+  };
+
+  if (!showForm) {
+    return (
+      <div className="expense-form">
+        <button className="submit-button" onClick={() => setShowForm(true)}>
+          Add New Expense
+      </button>
+        
+      </div>
+    );
+  }
 
   return (
     <div className="expense-form">
@@ -66,10 +82,16 @@ const ExpenseForm = (props) => {
             onChange={handleDateChange}
           />
         </div>
-        <button className="submit-button" type="submit">Add Expense</button>
+        <button className="cancel-button" type="button" onClick={handleCancel}>
+          Cancel
+        </button>
+        <button className="submit-button" type="submit">
+          Add Expense
+        </button>
       </form>
     </div>
   );
 };
 
 export default ExpenseForm;
+ 
