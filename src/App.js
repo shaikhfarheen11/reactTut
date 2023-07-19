@@ -1,79 +1,42 @@
-// import React, {useState} from 'react';
-import React, { useState,  Fragment } from 'react';
-import AddUser from './Components/Users/AddUser';
-import UserList from './Components/Users/UserList';
-// import CourseGoalList from './Components/CourseGoals/CourseGoalList/CourseGoalList';
-// import CourseInput from './Components/CourseGoals/CourseInput/CourseInput';
-// import './App.css';
+import React, { useState, useEffect } from 'react';
 
-// const App = () => {
-//   const [courseGoals, setCourseGoals] = useState([
-//     { text: 'Do all exercises!', id: 'g1' },
-//     { text: 'Finish the course!', id: 'g2' }
-//   ]);
-
-//   const addGoalHandler = enteredText => {
-//     setCourseGoals(prevGoals => {
-//       const updatedGoals = [...prevGoals];
-//       updatedGoals.unshift({ text: enteredText, id: Math.random().toString() });
-//       return updatedGoals;
-//     });
-//   };
-
-//   const deleteItemHandler = (goalId) => {
-//     setCourseGoals((prevGoals) => {
-//       const updatedGoals = prevGoals.filter((goal) => goal.id !== goalId);
-  
-//       return updatedGoals;
-//     });
-//   };
-
-//   let content = (
-//     <p style={{ textAlign: 'center' }}>No goals found. Maybe add one?</p>
-//   );
-
-//   if (courseGoals.length > 0) {
-//     content = (
-//       <CourseGoalList items={courseGoals} onDeleteItem={deleteItemHandler} />
-//     );
-//   }
-
-//   return (
-//     <div>
-//       <section id="goal-form">
-//         <CourseInput onAddGoal={addGoalHandler} />
-//       </section>
-//       <section id="goals">
-//         {content}
-//         {/* {courseGoals.length > 0 && (
-//           <CourseGoalList
-//             items={courseGoals}
-//             onDeleteItem={deleteItemHandler}
-//           />
-//         ) // <p style={{ textAlign: 'center' }}>No goals found. Maybe add one?</p>
-//         } */}
-//       </section>
-//     </div>
-//   );
-// };
+import Login from './Components/Login/Login';
+import Home from './Components/Home/Home';
+import MainHeader from './Components/MainHeader/MainHeader';
 
 function App() {
-    const [userList, setUsersList] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const addUserHandler = (uName, uAge, uCollege) => {
-        setUsersList((prevUsersList) => {
-            return [...prevUsersList, { name: uName, age: uAge, college: uCollege, id: Math.random().toString() },
-            ];
-        });
-    };
+  useEffect(() => {
+    const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
 
-    return (
-        <Fragment>
-        <AddUser onAddUser = {addUserHandler}/>
-        <UserList users = {userList}/>
+    if(storedUserLoggedInInformation==='1'){
+      setIsLoggedIn(true);
+    }
 
-        </Fragment>
-    )
+  }, []);
+
+  const loginHandler = (email, password) => {
+    // We should of course check email and password
+    // But it's just a dummy/ demo anyways
+    localStorage.setItem('isLoggedIn', '1');
+    setIsLoggedIn(true);
+  };
+
+  const logoutHandler = () => {
+    localStorage.removeItem('isLoggedIn');
+    setIsLoggedIn(false);
+  };
+
+  return (
+    <React.Fragment>
+      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+      <main>
+        {!isLoggedIn && <Login onLogin={loginHandler} />}
+        {isLoggedIn && <Home onLogout={logoutHandler} />}
+      </main>
+    </React.Fragment>
+  );
 }
 
 export default App;
