@@ -22,3 +22,24 @@
     background: #fad0ec;
     border-color: #8b005d;
   }
+  .form-control.invalid input {
+    border-color: lightcoral; /* Light red border color for invalid input */
+  }
+  
+  .button {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    background-color: #3f51b5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .button:hover {
+    background-color: #283593;
+  }
+  
+  .button:disabled {
+    cursor: not-allowed;
+    background-color: lightcoral; /* Light red background color for disabled button */
+  }
