@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './SellerPage.css';
 
 const productData = [
-  { id: 'Electronics', display: 'Electronic items' },
-  { id: 'Food' , display: 'Food items'},
-  { id: 'SkinCare', display: 'SkinCare items' },
+  { id: 'Electronics', display: 'Electronic Items' },
+  { id: 'Food' , display: 'Food Items'},
+  { id: 'SkinCare', display: 'SkinCare Items' },
 ];
 
 const SellerPage = () => {
@@ -108,7 +108,7 @@ const SellerPage = () => {
           <option value="">select a Category</option>
           {productData.map((products) => (
             <option key={products.id} value={products.id}>
-              {products.display}
+              {products.id}
             </option>
           ))}
         </select>
