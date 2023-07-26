@@ -1,14 +1,14 @@
 import React from 'react';
-import './Button.css';
 
-const Button = (props) => {
-  const { type, onClick, disabled } = props;
+import classes from './Button.module.css';
 
-  // Check if the button is disabled and add the 'invalid' class to style it with a light red color
-  const buttonClassName = `button ${disabled ? 'invalid' : ''}`;
-
+const Button = props => {
   return (
-    <button type={type} className={buttonClassName} onClick={onClick} disabled={disabled}>
+    <button
+    className={classes.button}
+    type={props.type || 'button'}
+    onClick={props.onClick}
+    >
       {props.children}
     </button>
   );

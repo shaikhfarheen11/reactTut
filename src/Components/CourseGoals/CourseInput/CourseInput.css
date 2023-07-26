@@ -1,5 +1,6 @@
 .form-control {
     margin: 0.5rem 0;
+    color: aliceblue;
   }
   
   .form-control label {
@@ -23,23 +24,11 @@
     border-color: #8b005d;
   }
   .form-control.invalid input {
-    border-color: lightcoral; /* Light red border color for invalid input */
+    border-color: rgb(168, 19, 19); 
+    /* Light red border color for invalid input */
+    background: #ffd7df;
   }
-  
-  .button {
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    background-color: #3f51b5;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
+  .form-control.invalid label{
+    color: red;
   }
-  
-  .button:hover {
-    background-color: #283593;
-  }
-  
-  .button:disabled {
-    cursor: not-allowed;
-    background-color: lightcoral; /* Light red background color for disabled button */
-  }
+ 
