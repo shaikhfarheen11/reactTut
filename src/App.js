@@ -1,27 +1,14 @@
-import React, { useContext } from 'react';
+// App.js
+import React from 'react';
+import SellerPage from './Components/SellerPage';
 
-import Login from './Components/Login/Login';
-import Home from './Components/Home/Home';
-import MainHeader from './Components/MainHeader/MainHeader';
-import AuthContext from './Components/store/auth-context';
-
-
-
-function App() {
-const ctx = useContext(AuthContext);
-  
-
+const App = () => {
   return (
-    <React.Fragment>
-      <MainHeader />
-      <main>
-        {!ctx.isLoggedIn && <Login />}
-        {ctx.isLoggedIn && <Home />}
-      </main>
-      </React.Fragment>
-
-    
+    <div>
+      <h2>Let's get started</h2>
+      <SellerPage />
+    </div>
   );
-}
+};
 
 export default App;
