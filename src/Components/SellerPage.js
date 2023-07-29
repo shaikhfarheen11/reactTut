@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './SellerPage.css';
 
-const productData = [
-  { id: 'Electronics', display: 'Electronic Items' },
-  { id: 'Food' , display: 'Food Items'},
-  { id: 'SkinCare', display: 'SkinCare Items' },
-];
-
 const SellerPage = () => {
   const [enteredProductid, setEnteredProductId] = useState('');
   const [enteredSellingPrice, setEnteredSellingPrice] = useState('');
   const [enteredProductName, setEnteredProductName] = useState('');
-  const [enteredChooseCategory, setEnteredChooseCategory] = useState('');
-  const [ordersList, setOrdersList] = useState([]);
+  const [productList, setProductList] = useState([]);
+
+  useEffect(() => {
+    // Load data from local storage when the component mounts
+    const productsFromStorage = Object.values(localStorage).map((item) =>
+      JSON.parse(item)
+    );
+    setProductList(productsFromStorage);
+  }, []);
 
   const handleProductId = (event) => {
     setEnteredProductId(event.target.value);
@@ -26,51 +27,48 @@ const SellerPage = () => {
     setEnteredProductName(event.target.value);
   };
 
-  const handleChooseCategory = (event) => {
-    setEnteredChooseCategory(event.target.value);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const order = {
-      productId: enteredProductid,
-      choosePrice: enteredSellingPrice,
-      chooseProduct: enteredProductName,
-      chooseCategory: enteredChooseCategory,
+    const newProduct = {
+      orderId: enteredProductid,
+      expenseamount: enteredSellingPrice,
+      description: enteredProductName,
     };
-    const existingOrders = JSON.parse(localStorage.getItem(enteredProductid)) || [];
-    existingOrders.push(order);
 
-    localStorage.setItem(enteredProductid, JSON.stringify(existingOrders));
+    setProductList((prevProductList) => [...prevProductList, newProduct]);
 
-    setOrdersList((prevOrders) => [...prevOrders, order]);
+    localStorage.setItem(enteredProductid, JSON.stringify(newProduct));
 
-    // setEnteredOrderedId('');
-    // setEnteredChoosePrice('');
-    // setEnteredChooseDish('');
-    // Do not reset enteredChooseTable to an empty string
+    // setEnteredProductId('');
+    // setEnteredSellingPrice('');
+    // setEnteredProductName('');
   };
 
-  const handleDeleteOrder = (orderId) => {
-    localStorage.removeItem(orderId);
-    // Update the ordersList state after deleting an order
-    setOrdersList((prevOrders) =>
-      prevOrders.filter((order) => order.productId !== orderId)
-    );
+  const handleDeleteProduct = (index) => {
+    const productIdToDelete = productList[index].orderId;
+
+    // Remove the product from local storage
+    localStorage.removeItem(productIdToDelete);
+
+    
+  const updatedProductList = [...productList];
+  updatedProductList.splice(index, 1);
+  setProductList(updatedProductList);
+};
+
+  // Calculate the total value of all products
+
+  const getTotalValue = () => {
+    const total = productList.reduce((sum, product) => {
+      return sum + +product.expenseamount;
+    }, 0);
+    return total.toFixed(2);
   };
 
-  useEffect(() => {
-    const ordersData = Object.keys(localStorage).map((orderId) =>
-      JSON.parse(localStorage.getItem(orderId))
-    );
-    setOrdersList(ordersData);
-  }, []); // Add ordersList as a dependency to useEffect
-  
   return (
     <div className="seller-admin">
       <form onSubmit={handleSubmit}>
-        
         <div className="product-control">
           <label htmlFor="productid">Product ID:</label>
           <input
@@ -81,38 +79,23 @@ const SellerPage = () => {
           />
         </div>
         <div className="product-control">
-        <label htmlFor="chooseprice">Selling Price:</label>
-        <input
-          type="number"
-          id="chooseprice"
-          value={enteredSellingPrice}
-          onChange={handleSellingPrice}
-        />
-      </div>
-      <div className="product-control">
-        <label htmlFor="productname">Product Name:</label>
-        <input
-          type="text"
-          id="expenseproductname"
-          value={enteredProductName}
-          onChange={handlePruductName}
-        />
-      </div>
-      <div className="product-control">
-        <label htmlFor="chooseaCategory">Choose a Category:</label>
-        <select
-          id="expensechooseCategory"
-          value={enteredChooseCategory}
-          onChange={handleChooseCategory}
-        >
-          <option value="">select a Category</option>
-          {productData.map((products) => (
-            <option key={products.id} value={products.id}>
-              {products.id}
-            </option>
-          ))}
-        </select>
-      </div>
+          <label htmlFor="chooseprice">Selling Price:</label>
+          <input
+            type="number"
+            id="chooseprice"
+            value={enteredSellingPrice}
+            onChange={handleSellingPrice}
+          />
+        </div>
+        <div className="product-control">
+          <label htmlFor="productname">Product Name:</label>
+          <input
+            type="text"
+            id="expenseproductname"
+            value={enteredProductName}
+            onChange={handlePruductName}
+          />
+        </div>
 
         <button className="submit-button" type="submit">
           Add Product
@@ -121,36 +104,19 @@ const SellerPage = () => {
 
       <div className="product-info">
         <h2>Products</h2>
-        {productData.map((products) => {
-          const productId = products.id;
-          const categoryDisplay = products.display;
+        {productList.map((product, index) => (
+          <div key={index}>
+            <span className="big-dot" />
+            {product.expenseamount} - {product.description} -{' '}
+            <button className="delete-button" onClick={() => handleDeleteProduct(index)}> Delete Product
+            </button>
+          </div>
+        ))}
+      </div>
 
-          // Filter the ordersList based on the selected table
-          const productOrders = ordersList.filter(
-            (order) => order.chooseCategory === productId
-          );
-
-          return (
-            <div key={productId}>
-              <h3>{categoryDisplay}</h3>
-              {productOrders.map((order, index) => (
-                <div key={index}>
-                  <div>
-                  <span className="big-dot" />
-                     {order.choosePrice} - { order.chooseCategory } - {order.chooseProduct} - 
-                  
-                   <button
-                    className="delete-button"
-                    onClick={() => handleDeleteOrder(order.productId)}
-                  >
-                    Delete Order
-                  </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-        })}
+      <div className="total-value">
+        <h2>Total Value Worth Of Products: {getTotalValue() > 0 ? `Rs ${getTotalValue()}` : 'Rs 0'}</h2>
+       
       </div>
     </div>
   );
