@@ -6,7 +6,7 @@ body {
   align-items: center;
   min-height: 100vh;
   background-color: #fdfdfd;
-  background-color:rgb(194, 155, 181);
+  background-color:rgb(238, 167, 185);
 }
 .seller-admin {
     display: flex;
@@ -14,8 +14,8 @@ body {
     align-items:center;
     background-color: #fdfdfd;
     margin: 1px;
-    margin-bottom: 250px;
-    background-color: rgb(194, 155, 181);
+    margin-bottom: 180px;
+    background-color: rgb(238, 167, 185);
   
 }
  .product-control {
@@ -59,7 +59,7 @@ body {
   }
   
   .submit-button:hover {
-    background-color: rgb(11, 114, 11)
+    background-color: rgb(8, 82, 8)
     
   }
   .product-info h2 {
@@ -78,10 +78,12 @@ body {
     padding: 0.9rem ;
     width: 7.9rem;
     font-weight: bold;
-    background-color: rgb(149, 167, 190);
+    background-color: rgb(53, 113, 241);
+    font-size: 13px;
+    font-family:sans-serif;
   }
   .delete-button:hover{
-    background-color: rgb(207, 18, 18);
+    background-color: rgb(151, 6, 6);
   }
   .total-value{
     font-size: 15px;

@@ -108,8 +108,8 @@ const SellerPage = () => {
           <div key={index}>
             <span className="big-dot" />
             {product.expenseamount} - {product.description} -{' '}
-            <button className="delete-button" onClick={() => handleDeleteProduct(index)}> Delete Product
-            </button>
+            <button className="delete-button" onClick={() => handleDeleteProduct(index)}>
+              Delete Product</button>
           </div>
         ))}
       </div>
