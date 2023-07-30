@@ -1,12 +1,12 @@
 
 import React from 'react';
-import SellerPage from './Components/SellerPage';
+import WaiterLife from './Components/WaiterLife';
 
 const App = () => {
   return (
     <div>
       
-      <SellerPage />
+      <WaiterLife />
     </div>
   );
 };
