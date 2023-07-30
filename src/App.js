@@ -1,13 +1,11 @@
+import React, { Fragment } from "react";
+import Header from "./Components/Layouts/Header";
 
-import React from 'react';
-import WaiterLife from './Components/WaiterLife';
-
-const App = () => {
+function App(){
   return (
-    <div>
-      
-      <WaiterLife />
-    </div>
+    <Fragment>
+      <Header />
+    </Fragment>
   );
 };
 
