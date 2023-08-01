@@ -52,6 +52,7 @@
   
   .button:hover,
 .button--alt:hover {
-  background-color: #16738c;
+  background-color: rgb(88, 16, 16);
+  color: white;
 }
   
