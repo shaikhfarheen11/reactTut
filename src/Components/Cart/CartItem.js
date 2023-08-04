@@ -1,10 +1,10 @@
 import classes from './CartItem.module.css';
 
-const CartItems = (props) => {
+const CartItem = (props) => {
     const price = `$${props.price}`;
 
 return (
-    <li className={classes['cart-items']}>
+    <li className={classes['cart-item']}>
         <div>
             <h2>{props.name}</h2>
             <div className={classes.summary}>
@@ -19,3 +19,4 @@ return (
     </li>
 )
 }
+export default CartItem;

@@ -1,78 +1,40 @@
-
 .backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 100; /* Set a higher z-index for the backdrop */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.75);
+}
 
+.modal {
+  position: fixed;
+  top: 20vh;
+  left: 5%;
+  width: 90%;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 30;
+  animation: slide-down 300ms ease-out forwards;
+}
+
+@media (min-width: 768px) {
   .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    padding: 1rem;
-    width: 42%;
-    height: 30%;
-    z-index: 101; 
-    margin-top: 5rem;
-    flex-direction: column;
+    width: 40rem;
+    left: calc(50% - 20rem);
+  }
+}
 
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
   }
-  
-
-  .modal .content {
-    font-size: 1.1rem;
-    color: #333;
-    line-height: 1.6;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-
-  .modal .close-button {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: #777;
-    background: none;
-    border: none;
-    z-index: 102;
-    margin: 0;
-  }
-  
-
-  .modal .close-button span {
-    display: inline-block;
-    width: 1.2rem;
-    height: 1.2rem;
-    line-height: 1.2rem;
-    text-align: center;
-  }
-
-  .modal .close-button span::before,
-  .modal .close-button span::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background-color: #777;
-  }
-  
-  .modal .close-button span::before {
-    transform: rotate(45deg);
-  }
-  
-  .modal .close-button span::after {
-    transform: rotate(-45deg);
-  }
-  
+}
