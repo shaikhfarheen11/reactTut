@@ -1,30 +1,38 @@
-import { useState } from "react";
-import Header from './Components/Layouts/Header';
-import Meals from './Components/Meals/Meals';
-import Cart from "./Components/Cart/Cart";
-import CartProvider from "./Components/store/CartProvider";
-
+import React, { useState, useCallback, useMemo } from "react";
+import Button from "./Components/UI/Button";
+import './App.css';
+import DemoList from "./Components/Demo/DemoList";
 
 function App(){
-  const [cartIsShown, setCartIsShown] = useState(false);
+  const [listTitle, setListTitle] = useState('My List');
+  const [isDescending, setIsDescending] = useState(false);
 
-  const showCartHandler = () => {
-    setCartIsShown(true);
-  };
+  const changeTitleHandler = useCallback(() => {
+    setListTitle('New Title');
+  }, []);
 
-  const hideCartHandler = () => {
-    setCartIsShown(false);
-  }
+  const toggleOrderHandler = useCallback(() => {
+    setIsDescending(prevIsDescending => !prevIsDescending);
+  }, []);
+
+  const listItems = useMemo(() => [5, 3, 1, 10, 9], []);
+
+ 
+  const sortedList = useMemo(() => {
+    console.log('Items sorted');
+    return isDescending ? [...listItems].sort((a, b) => b - a) : [...listItems].sort((a, b) => a - b);
+  }, [listItems, isDescending]);
+
+  console.log('App RUNNING');
+
   return (
-    <CartProvider>
-      {cartIsShown && <Cart onClose={hideCartHandler} />}
-      <Header onShowCart={showCartHandler} />
-      <main>
-        <Meals />
-     
-      </main>
-    </CartProvider>
-
+    <div className="app">
+      <DemoList title={listTitle} items={sortedList} />
+      <Button onClick={changeTitleHandler}>Change List Title</Button>
+      <Button onClick={toggleOrderHandler}>
+        {isDescending ? "Change to Ascending Order"  :  "Change to Descending Order"}
+      </Button>
+    </div>
   );
 }
 

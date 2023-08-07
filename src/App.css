@@ -1,4 +1,4 @@
-#goals {
+/* #goals {
   width: 35rem;
   max-width: 90%;
   margin: 3rem auto;
@@ -11,4 +11,23 @@
   padding: 2rem;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+} */
+
+.app {
+  margin: 3rem auto;
+  width: 30rem;
+  padding: 1rem;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.app h1 {
+  margin: 0;
+  text-align: center;
+  
+}
+.app button {
+  margin-top: 0.4rem; 
 }
