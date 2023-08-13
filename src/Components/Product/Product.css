@@ -1,0 +1,27 @@
+.product-control{
+    color: beige;
+    margin-bottom: 16px;
+    padding: 5px;
+
+
+}
+.cart-badge {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: red;
+    color: white;
+    font-size: 20px;
+    padding: 20px 20px;
+    border-radius: 20%;
+  }
+  .added-products{
+    color: beige;
+  }
+  .cart-content{
+    color: antiquewhite;
+  }
+  .submit-button{
+    padding: 0.5rem;
+
+  }
