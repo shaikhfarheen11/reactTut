@@ -7,14 +7,13 @@ const Product = () => {
     sizeQuantities,
     handleSizeQuantityChange,
     addProduct,
-    cartBadgeCount,
     addedProducts,
   } = useProductContext();
 
   const [enteredTshirtName, setEnteredTshirtName] = useState('');
   const [enteredDescription, setEnteredDescription] = useState('');
   const [enteredChoosePrice, setEnteredChoosePrice] = useState('');
-  const [isCartVisible, setIsCartVisible] = useState(false);
+  const [isCartVisible] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,23 +43,23 @@ const Product = () => {
     handleSizeQuantityChange('L', 0);
   };
 
-  const toggleCartVisibility = () => {
-    setIsCartVisible(!isCartVisible);
-  };
-  const calculateTotalAmount = () => {
-    let totalAmount = 0;
+  // const toggleCartVisibility = () => {
+  //   setIsCartVisible(!isCartVisible);
+  // };
+  // const calculateTotalAmount = () => {
+  //   let totalAmount = 0;
   
-    addedProducts.forEach((product) => {
-      const productPrice = parseFloat(product.choosePrice);
-      const productTotal = product.selectedSizes.reduce((acc, sizeObj) => {
-        return acc + parseFloat(sizeObj.quantity);
-      }, 0);
+  //   addedProducts.forEach((product) => {
+  //     const productPrice = parseFloat(product.choosePrice);
+  //     const productTotal = product.selectedSizes.reduce((acc, sizeObj) => {
+  //       return acc + parseFloat(sizeObj.quantity);
+  //     }, 0);
   
-      totalAmount += productPrice * productTotal;
-    });
+  //     totalAmount += productPrice * productTotal;
+  //   });
   
-    return totalAmount.toFixed(2);
-  };
+  //   return totalAmount.toFixed(2);
+  // };
 
   return (
     <div className="e-commerce">
@@ -136,10 +135,6 @@ const Product = () => {
         </button>
       </form>
 
-      <button className="cart-badge" onClick={toggleCartVisibility}>
-        Cart: {cartBadgeCount}
-      </button>
-
       {isCartVisible && (
         <div className="cart-overlay">
           <div className="cart-content">
@@ -159,22 +154,13 @@ const Product = () => {
                 </li>
               ))}
             </ul>
-            <div className="cart-total">
-              <p>Total Amount: ${calculateTotalAmount()}</p>
-            </div>
-            <div className="cart-buttons">
-              <button className="place-order-button">Place Order</button>
-              <button className="cancel-button" onClick={toggleCartVisibility}>
-                Cancel
-              </button>
+           
             </div>
           </div>
-        </div>
+        
       )}
 
-
-
-      <div className="added-products">
+<div className="added-products">
         <h2>Added Products:</h2>
         <ul>
           {addedProducts.map((product, index) => (

@@ -3,19 +3,18 @@ import MealItemForm from './MealItemForm';
 import classes from './MealItem.module.css';
 import CartContext from '../store/cart-context';
 
-
 const MealItem = (props) => {
     const cartCtx = useContext(CartContext);
      
     const price = `$${props.price.toFixed(2)}`;
 
-    const addToCartHandler = amount => {
+    const addToCartHandler = (size, amount) => {
         cartCtx.addItem({
             id: props.id,
             name: props.name,
             amount: amount,
+            size: size,
             price: props.price
-
         });
     };
 
@@ -32,4 +31,5 @@ const MealItem = (props) => {
         </li>
     );
 };
+
 export default MealItem;

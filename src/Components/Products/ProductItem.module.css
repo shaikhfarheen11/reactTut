@@ -1,0 +1,22 @@
+.productItem {
+  /* border: 1px solid #ccc; */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem; /* Add margin to separate items */
+}
+
+.productItem img {
+  max-width: 100%;
+  height: auto;
+}
+
+.productItem h3 {
+  margin: 0.5rem 0;
+}
+
+.productItem .price {
+  font-weight: bold;
+  color: #f00;
+}
