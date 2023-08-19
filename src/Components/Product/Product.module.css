@@ -1,0 +1,30 @@
+/* Product.module.css */
+
+/* ... other styles ... */
+
+.cart-badge {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: red; /* Set the background color to red */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+}
+.cart-badge-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+
+
+.product-control{
+  color: white;
+}
+.white-text{
+  color: white;
+
+}

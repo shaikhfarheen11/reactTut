@@ -1,77 +1,129 @@
-import React, { useState } from 'react';
-import './Product.css';
-import { useProductContext } from '../store/ProductContext';
+import React, { useState, useEffect } from 'react';
+import classes from './Product.module.css';
 
-const Product = () => {
-  const {
-    sizeQuantities,
-    handleSizeQuantityChange,
-    addProduct,
-    addedProducts,
-  } = useProductContext();
 
-  const [enteredTshirtName, setEnteredTshirtName] = useState('');
+
+const CartBadge = ({ cartItems, onClose, onPlaceOrder }) => (
+  <div className={classes['cart-badge-overlay']}>
+    <div className={classes['cart-badge-content']}>
+      <button className={classes['close-button']} onClick={onClose}>Close</button>
+      <h3 className={classes['white-text']}>My Cart</h3>
+      <ul>
+        {cartItems.map((item, index) => (
+          <li key={index}>
+            <p className={classes['white-text']}>{item.medicineName} - {item.description} - {item.price} - {item.quantity}</p>
+          </li>
+        ))}
+      </ul>
+      <p className={classes['white-text']}>Total Amount: {cartItems.reduce((total, item) => total + (item.price * item.quantity), 0)}</p>
+      <button className={classes['place-order-button']} onClick={onPlaceOrder}>Place Order</button>
+      <button className={classes['cancel-button']} onClick={onClose}>Cancel</button>
+    </div>
+  </div>
+);
+const WaiterLife = () => {
+  const [enteredMedicineName, setEnteredMedicineName] = useState('');
   const [enteredDescription, setEnteredDescription] = useState('');
   const [enteredChoosePrice, setEnteredChoosePrice] = useState('');
-  const [isCartVisible] = useState(false);
+  const [enteredQuantity, setEnteredQuantity] = useState('');
+  const [maxQuantity, setMaxQuantity] = useState(0);
+  const [addedProducts, setAddedProducts] = useState([]);
+  const [cartTotal, setCartTotal] = useState(0);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+
+  const handleMedicineName = (event) => {
+    setEnteredMedicineName(event.target.value);
+  };
+
+  const handleChoosePrice = (event) => {
+    setEnteredChoosePrice(event.target.value);
+  };
+
+  const handleQuantity = (event) => {
+    const newQuantity = parseInt(event.target.value);
+    setEnteredQuantity(newQuantity);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    const selectedSizes = Object.keys(sizeQuantities).filter(
-      (size) => sizeQuantities[size] > 0
-    );
-
     const newProduct = {
-      tshirtName: enteredTshirtName,
+      medicineName: enteredMedicineName,
       description: enteredDescription,
-      choosePrice: enteredChoosePrice,
-      selectedSizes: selectedSizes.map((size) => ({
-        size,
-        quantity: sizeQuantities[size],
-      })),
+      price: enteredChoosePrice,
+      quantity: enteredQuantity,
     };
+    setAddedProducts([...addedProducts, newProduct]);
 
-    // Call the addProduct function from context to add the new product
-    addProduct(newProduct);
-
-    setEnteredTshirtName('');
-    setEnteredDescription('');
-    setEnteredChoosePrice('');
-    handleSizeQuantityChange('S', 0);
-    handleSizeQuantityChange('M', 0);
-    handleSizeQuantityChange('L', 0);
+    // Clear input fields after adding the product
+  //   setEnteredMedicineName('');
+  //   setEnteredDescription('');
+  //   setEnteredChoosePrice('');
+  //   setEnteredQuantity('');
   };
 
-  // const toggleCartVisibility = () => {
-  //   setIsCartVisible(!isCartVisible);
-  // };
-  // const calculateTotalAmount = () => {
-  //   let totalAmount = 0;
-  
-  //   addedProducts.forEach((product) => {
-  //     const productPrice = parseFloat(product.choosePrice);
-  //     const productTotal = product.selectedSizes.reduce((acc, sizeObj) => {
-  //       return acc + parseFloat(sizeObj.quantity);
-  //     }, 0);
-  
-  //     totalAmount += productPrice * productTotal;
-  //   });
-  
-  //   return totalAmount.toFixed(2);
-  // };
+  useEffect(() => {
+    // Update description, price, and max quantity based on selected medicine name
+    if (enteredMedicineName === 'Paracetamol') {
+      setEnteredDescription('Reduce body temperature');
+      setEnteredChoosePrice('100');
+      setMaxQuantity(1000);
+    } else if (enteredMedicineName === 'Tylenol') {
+      setEnteredDescription('Relieve headaches');
+      setEnteredChoosePrice('50');
+      setMaxQuantity(50);
+    } else if (enteredMedicineName === 'Motrin') {
+      setEnteredDescription('Provide pain relief');
+      setEnteredChoosePrice('20');
+      setMaxQuantity(200);
+    } else if (enteredMedicineName === 'Advil') {
+      setEnteredDescription('Fever relief');
+      setEnteredChoosePrice('300');
+      setMaxQuantity(300);
+    }
+    setEnteredQuantity('');
+  }, [enteredMedicineName]);
+
+  const medicineNames = ['Paracetamol', 'Tylenol', 'Motrin', 'Advil'];
+
+  const handleAddToBill = () => {
+    // Perform any additional actions before adding to the bill
+    // For example, sending the data to a backend or processing it
+    console.log('Adding to bill:', addedProducts);
+    setCartTotal(addedProducts.reduce((total, product) => total + product.quantity, 0));
+  };
+
+  const handleCartClick = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+
+  const handlePlaceOrder = () => {
+    // Implement your logic to place the order
+    console.log('Placing order:', addedProducts);
+    // Clear the cart or perform any necessary actions
+    setAddedProducts([]);
+    setCartTotal(0);
+    setIsCartOpen(false);
+  };
 
   return (
-    <div className="e-commerce">
+    <div className="seller-admin">
       <form onSubmit={handleSubmit}>
+        {/* ... (input fields) */}
         <div className="product-control">
-          <label htmlFor="tshirtname">TshirtName:</label>
-          <input
-            type="text"
-            id="tshirtname"
-            value={enteredTshirtName}
-            onChange={(event) => setEnteredTshirtName(event.target.value)}
-          />
+          <label htmlFor="medicinename">Medicine Name:</label>
+          <select
+            id="medicinename"
+            value={enteredMedicineName}
+            onChange={handleMedicineName}
+          >
+            <option value="">Select a medicine</option>
+            {medicineNames.map((medicine, index) => (
+              <option key={index} value={medicine}>
+                {medicine}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="product-control">
           <label htmlFor="description">Description:</label>
@@ -79,99 +131,59 @@ const Product = () => {
             type="text"
             id="description"
             value={enteredDescription}
-            onChange={(event) => setEnteredDescription(event.target.value)}
+            readOnly
           />
         </div>
-        
         <div className="product-control">
-          <label htmlFor="choosePrice">Price:</label>
+          <label htmlFor="price">Price:</label>
+          <input
+            type="text"
+            id="chooseprice"
+            value={enteredChoosePrice}
+            onChange={handleChoosePrice}
+          />
+        </div>
+        <div className="product-control">
+          <label htmlFor="qunatityavailable">Quantity Available:</label>
           <input
             type="number"
-            id="choosePrice"
-            value={enteredChoosePrice}
-            onChange={(event) => setEnteredChoosePrice(event.target.value)}
+            id="expensequnatity"
+            value={enteredQuantity}
+            onChange={handleQuantity}
+            max={maxQuantity}
           />
         </div>
-
-        <div className="product-control">
-          <label htmlFor="size">Sizes:</label>
-          <label>
-            <input
-              type="number"
-              name="size"
-              value={sizeQuantities['Small']}
-              onChange={(event) =>
-                handleSizeQuantityChange('Small', event.target.value)
-              }
-            />
-            S
-          </label>
-          <label>
-            <input
-              type="number"
-              name="size"
-              value={sizeQuantities['Medium']}
-              onChange={(event) =>
-                handleSizeQuantityChange('Medium', event.target.value)
-              }
-            />
-            M
-          </label>
-          <label>
-            <input
-              type="number"
-              name="size"
-              value={sizeQuantities['Large']}
-              onChange={(event) =>
-                handleSizeQuantityChange('Large', event.target.value)
-              }
-            />
-            L
-          </label>
-        </div>
-        
         <button className="submit-button" type="submit">
           Add Product
         </button>
       </form>
 
-      {isCartVisible && (
-        <div className="cart-overlay">
-          <div className="cart-content">
-            <h2>Cart Items:</h2>
-            <ul>
-              {addedProducts.map((product, index) => (
-                <li key={index}>
-                  <p>{product.tshirtName} - {product.description} - {product.choosePrice}</p>
-                  <p>Sizes:</p>
-                  <ul>
-                    {product.selectedSizes.map((sizeObj, sizeIndex) => (
-                      <li key={sizeIndex}>
-                        {sizeObj.size} - {sizeObj.quantity}
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
-            </ul>
-           
-            </div>
-          </div>
-        
-      )}
-
-<div className="added-products">
+      <div className="added-products">
         <h2>Added Products:</h2>
         <ul>
           {addedProducts.map((product, index) => (
             <li key={index}>
-             
+              <p className='white-text'>{product.medicineName} - {product.description} - {product.price} - {product.quantity}</p>
             </li>
           ))}
         </ul>
       </div>
+      <button className="add-to-bill-button" onClick={handleAddToBill}>
+        Add to bill
+      </button>
+      <button className="cart-badge" onClick={handleCartClick}>
+          My Cart: {cartTotal}
+        </button>
+
+      {isCartOpen && (
+        <CartBadge
+          cartItems={addedProducts}
+          onClose={handleCartClick}
+          onPlaceOrder={handlePlaceOrder}
+        />
+      )}
     </div>
   );
 };
 
-export default Product;
+export default WaiterLife;

@@ -12,8 +12,9 @@ const CartItem = (props) => {
                 <h2>{props.name}</h2>
                 <div className={classes.summary}>
                     <span className={classes.price}>{price}</span>
-                    <span className={classes.amount}> {props.selectedSize} x  {props.amount}</span>
-
+                    <div>{props.selectedSize}</div>
+                    <span className={classes.amount}> x  {props.amount}</span>
+                  
                 </div>
             </div>
             <div className={classes.actions}>

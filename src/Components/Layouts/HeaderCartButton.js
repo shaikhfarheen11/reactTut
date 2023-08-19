@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import CartIcon from '../Cart/CartIcon';
-import CartContext from '../store/cart-context';
+import CartContext from '../store/cart-context'; // Make sure to import CartContext
+import CartIcon from '../Cart/CartIcon'; // Import CartIcon here
+
 import classes from './HeaderCartButton.module.css';
 
 const HeaderCartButton = (props) => {
@@ -12,12 +13,11 @@ const HeaderCartButton = (props) => {
   return (
     <button className={classes.button} onClick={props.onClick}>
       <span className={classes.icon}>
-        <CartIcon />
+        <CartIcon /> {/* Use CartIcon here */}
       </span>
       <span>Your Cart</span>
       <span className={classes.badge}>{totalItems}</span>
-      <span className={classes.size}>{selectedSizes}</span> {/* Display all selected sizes */}
-
+      <span className={classes.size}>{selectedSizes}</span>
     </button>
   );
 };
