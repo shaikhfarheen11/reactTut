@@ -1,180 +1,184 @@
 import React, { useState, useEffect } from 'react';
 import classes from './Product.module.css';
+import { useCart } from '../store/CartContext';
 
+  
+const CartBadge = ({ cartItems, onClose, onPlaceOrder }) => {
+  const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-
-const CartBadge = ({ cartItems, onClose, onPlaceOrder }) => (
-  <div className={classes['cart-badge-overlay']}>
-    <div className={classes['cart-badge-content']}>
-      <button className={classes['close-button']} onClick={onClose}>Close</button>
-      <h3 className={classes['white-text']}>My Cart</h3>
-      <ul>
-        {cartItems.map((item, index) => (
-          <li key={index}>
-            <p className={classes['white-text']}>{item.medicineName} - {item.description} - {item.price} - {item.quantity}</p>
-          </li>
-        ))}
-      </ul>
-      <p className={classes['white-text']}>Total Amount: {cartItems.reduce((total, item) => total + (item.price * item.quantity), 0)}</p>
-      <button className={classes['place-order-button']} onClick={onPlaceOrder}>Place Order</button>
-      <button className={classes['cancel-button']} onClick={onClose}>Cancel</button>
+  return (
+    <div className="cart-badge-overlay">
+      <div className="cart-badge-content">
+        <button className="close-button" onClick={onClose}>Close</button>
+        <h3>Cart</h3>
+        <p style={{ color: 'white' }}>Total Quantity: {totalQuantity}</p>
+        <ul>
+          {cartItems.map((item, index) => (
+            <li key={index}>
+              <p style={{ color: 'white' }}>{item.candyName} - {item.description} - {item.price}</p>
+            </li>
+          ))}
+        </ul>
+        <p style={{ color: 'white' }}>Total Amount: {cartItems.reduce((total, item) => total + (item.price * item.quantity), 0)}</p>
+        <button className="place-order-button" onClick={onPlaceOrder}>Place Order</button>
+        <button className="cancel-button" onClick={onClose}>Cancel</button>
+      </div>
     </div>
-  </div>
-);
-const WaiterLife = () => {
-  const [enteredMedicineName, setEnteredMedicineName] = useState('');
+  );
+};
+
+
+
+const Candy = () => {
+  const [enteredCandyName, setEnteredCandyName] = useState('');
   const [enteredDescription, setEnteredDescription] = useState('');
   const [enteredChoosePrice, setEnteredChoosePrice] = useState('');
-  const [enteredQuantity, setEnteredQuantity] = useState('');
-  const [maxQuantity, setMaxQuantity] = useState(0);
   const [addedProducts, setAddedProducts] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const { cartItems } = useCart(); // Access cartItems from context
 
-
-  const handleMedicineName = (event) => {
-    setEnteredMedicineName(event.target.value);
+  const handleCandyName = (event) => {
+    setEnteredCandyName(event.target.value);
   };
 
   const handleChoosePrice = (event) => {
     setEnteredChoosePrice(event.target.value);
   };
 
-  const handleQuantity = (event) => {
-    const newQuantity = parseInt(event.target.value);
-    setEnteredQuantity(newQuantity);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const newProduct = {
-      medicineName: enteredMedicineName,
+      candyName: enteredCandyName,
       description: enteredDescription,
-      price: enteredChoosePrice,
-      quantity: enteredQuantity,
+      price: parseFloat(enteredChoosePrice),
+      quantity: 1,
     };
     setAddedProducts([...addedProducts, newProduct]);
-
-    // Clear input fields after adding the product
-  //   setEnteredMedicineName('');
-  //   setEnteredDescription('');
-  //   setEnteredChoosePrice('');
-  //   setEnteredQuantity('');
   };
 
   useEffect(() => {
-    // Update description, price, and max quantity based on selected medicine name
-    if (enteredMedicineName === 'Paracetamol') {
-      setEnteredDescription('Reduce body temperature');
-      setEnteredChoosePrice('100');
-      setMaxQuantity(1000);
-    } else if (enteredMedicineName === 'Tylenol') {
-      setEnteredDescription('Relieve headaches');
-      setEnteredChoosePrice('50');
-      setMaxQuantity(50);
-    } else if (enteredMedicineName === 'Motrin') {
-      setEnteredDescription('Provide pain relief');
-      setEnteredChoosePrice('20');
-      setMaxQuantity(200);
-    } else if (enteredMedicineName === 'Advil') {
-      setEnteredDescription('Fever relief');
-      setEnteredChoosePrice('300');
-      setMaxQuantity(300);
+    // Update description and price based on selected candy name
+    if (enteredCandyName === 'Eclairs') {
+      setEnteredDescription('Caramel Choco');
+      setEnteredChoosePrice('10rs');
+    } else if (enteredCandyName === 'Alpenlibe') {
+      setEnteredDescription('Strawberry');
+      setEnteredChoosePrice('5Rs');
+    } else if (enteredCandyName === 'Choclairs') {
+      setEnteredDescription('Chocofills');
+      setEnteredChoosePrice('20Rs');
+    } else if (enteredCandyName === 'Melody') {
+      setEnteredDescription('Chocolaty');
+      setEnteredChoosePrice('10Rs');
     }
-    setEnteredQuantity('');
-  }, [enteredMedicineName]);
+  }, [enteredCandyName]);
 
-  const medicineNames = ['Paracetamol', 'Tylenol', 'Motrin', 'Advil'];
-
-  const handleAddToBill = () => {
-    // Perform any additional actions before adding to the bill
-    // For example, sending the data to a backend or processing it
-    console.log('Adding to bill:', addedProducts);
-    setCartTotal(addedProducts.reduce((total, product) => total + product.quantity, 0));
-  };
+  const candyNames = ['Eclairs', 'Alpenlibe', 'Choclairs', 'Melody'];
 
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
   };
 
+  const handleBuy1 = () => {
+    const lastProduct = addedProducts[addedProducts.length - 1];
+    if (lastProduct) {
+      lastProduct.quantity += 1;
+      setCartTotal(cartTotal + lastProduct.price);
+    }
+  };
+  
+  
+  const handleBuy2 = () => {
+    const lastProduct = addedProducts[addedProducts.length - 1];
+    if (lastProduct) {
+      lastProduct.quantity += 2;
+      setCartTotal(cartTotal + lastProduct.price * 2);
+    }
+  };
+  
+  const handleBuy3 = () => {
+    const lastProduct = addedProducts[addedProducts.length - 1];
+    if (lastProduct) {
+      lastProduct.quantity += 3;
+      setCartTotal(cartTotal + lastProduct.price * 3);
+    }
+  };
+
+
   const handlePlaceOrder = () => {
-    // Implement your logic to place the order
     console.log('Placing order:', addedProducts);
-    // Clear the cart or perform any necessary actions
     setAddedProducts([]);
     setCartTotal(0);
     setIsCartOpen(false);
   };
 
+  const totalQuantity = addedProducts.reduce((total, item) => total + item.quantity, 0);
+
   return (
-    <div className="seller-admin">
+    <div className={classes["seller-admin"]}>
       <form onSubmit={handleSubmit}>
-        {/* ... (input fields) */}
-        <div className="product-control">
-          <label htmlFor="medicinename">Medicine Name:</label>
-          <select
-            id="medicinename"
-            value={enteredMedicineName}
-            onChange={handleMedicineName}
-          >
-            <option value="">Select a medicine</option>
-            {medicineNames.map((medicine, index) => (
-              <option key={index} value={medicine}>
-                {medicine}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="product-control">
-          <label htmlFor="description">Description:</label>
-          <input
-            type="text"
-            id="description"
-            value={enteredDescription}
-            readOnly
-          />
-        </div>
-        <div className="product-control">
-          <label htmlFor="price">Price:</label>
-          <input
-            type="text"
-            id="chooseprice"
-            value={enteredChoosePrice}
-            onChange={handleChoosePrice}
-          />
-        </div>
-        <div className="product-control">
-          <label htmlFor="qunatityavailable">Quantity Available:</label>
-          <input
-            type="number"
-            id="expensequnatity"
-            value={enteredQuantity}
-            onChange={handleQuantity}
-            max={maxQuantity}
-          />
-        </div>
-        <button className="submit-button" type="submit">
-          Add Product
-        </button>
+
+      <div className={classes["product-control"]}>
+  <label htmlFor="candyname">Candy Name:</label>
+  <select
+    id="candyname"
+    value={enteredCandyName}
+    onChange={handleCandyName}
+    className={classes['input-field']}
+  >
+    <option value="">Select a Candy</option>
+    {candyNames.map((candy, index) => (
+      <option key={index} value={candy}>
+        {candy}
+      </option>
+    ))}
+  </select>
+  <label htmlFor="description">Description:</label>
+  <input
+    type="text"
+    id="description"
+    value={enteredDescription}
+    readOnly
+    className={classes['input-field']}
+  />
+  <label htmlFor="price">Price:</label>
+  <input
+    type="text"
+    id="chooseprice"
+    value={enteredChoosePrice}
+    onChange={handleChoosePrice}
+    className={classes['input-field']}
+  />
+</div>
+
+
+<button className={classes["submit-button"]} type="submit">
+  Add
+</button>
+
       </form>
 
-      <div className="added-products">
-        <h2>Added Products:</h2>
+      <div className= {classes["added-products"]}>
+        
         <ul>
           {addedProducts.map((product, index) => (
             <li key={index}>
-              <p className='white-text'>{product.medicineName} - {product.description} - {product.price} - {product.quantity}</p>
+              <p className='white-text'>{product.candyName} - {product.description} - {product.price}</p>
             </li>
           ))}
         </ul>
       </div>
-      <button className="add-to-bill-button" onClick={handleAddToBill}>
-        Add to bill
-      </button>
-      <button className="cart-badge" onClick={handleCartClick}>
-          My Cart: {cartTotal}
-        </button>
 
+      <button className="buy-button" onClick={handleBuy1}>Buy1</button>
+      <button className="buy-button" onClick={handleBuy2}>Buy2</button>
+      <button className="buy-button" onClick={handleBuy3}>Buy3</button>
+    
+
+
+      <button className={classes["cart-badge"]} onClick={handleCartClick}>
+        Cart: {totalQuantity}
+      </button>
       {isCartOpen && (
         <CartBadge
           cartItems={addedProducts}
@@ -186,4 +190,4 @@ const WaiterLife = () => {
   );
 };
 
-export default WaiterLife;
+export default Candy;

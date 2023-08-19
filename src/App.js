@@ -1,18 +1,14 @@
-
 import React from 'react';
-
-import Product from './Components/Product/Product'; // Adjust the path
-// import { ProductProvider } from './Components/store/ProductContext';
+import { CartProvider } from './Components/store/CartContext';
+import Product from './Components/Product/Product'; // Update the path
 
 function App() {
   return (
- 
+    <CartProvider>
       <div className="App">
-       
         <Product />
       </div>
-    
-   
+    </CartProvider>
   );
 }
 

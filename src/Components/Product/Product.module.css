@@ -1,30 +1,28 @@
-/* Product.module.css */
-
-/* ... other styles ... */
 
 .cart-badge {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: red; /* Set the background color to red */
-  color: white;
+  top: 10px; 
+  right: 10px; 
+  background-color: #f00; 
+  color: #fff; 
   border: none;
-  border-radius: 50%;
-  padding: 10px;
+  font-size: 1rem;
+  padding: 16px 20px;
   cursor: pointer;
+  border-radius: 100px;
 }
-.cart-badge-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
-
-
-
 .product-control{
+  color: white;
+  margin-left: 2rem;
+  margin-top: 2rem;
+}
+.added-products{
   color: white;
 }
 .white-text{
-  color: white;
+  color: #fff;
 
+}
+.submit-button{
+  padding: 8px 25px;
 }

@@ -6,20 +6,29 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (item) => {
-    setCartItems((prevItems) => [...prevItems, item]);
+    setCartItems([...cartItems, item]);
   };
 
-  const clearCart = () => {
-    setCartItems([]);
+  const updateQuantity = (index, quantity) => {
+    const updatedCart = [...cartItems];
+    updatedCart[index].quantity = quantity;
+    setCartItems(updatedCart);
+  };
+
+  const removeItem = (index) => {
+    const updatedCart = cartItems.filter((_, i) => i !== index);
+    setCartItems(updatedCart);
+  };
+
+  const calculateTotalAmount = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, clearCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, updateQuantity, removeItem, calculateTotalAmount }}>
       {children}
     </CartContext.Provider>
   );
 };
 
-export const useCart = () => {
-  return useContext(CartContext);
-};
+export const useCart = () => useContext(CartContext);
